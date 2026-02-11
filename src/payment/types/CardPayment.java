@@ -3,20 +3,19 @@ package payment.types;
 import payment.core.Payment;
 
 public class CardPayment extends Payment {
-    private int cardNumber;
+    private long cardNumber;
     private int cvv;
 
-    public CardPayment(int paymentId, int amount, boolean status, int cardNumber, int cvv) {
-        super(paymentId, amount, status);
+    public CardPayment(int paymentId, int amount, long cardNumber, int cvv) {
+        super(paymentId, amount);
         this.cardNumber = cardNumber;
         this.cvv = cvv;
     }
 
-    public int getCardNumber() {
-        return cardNumber;
-    }
-
-    public int getCvv() {
-        return cvv;
+    @Override
+    public void processPayment() {
+        System.out.println("Processing Card payment ending with "
+                + String.valueOf(cardNumber).substring(12));
+        markAsSuccess();
     }
 }

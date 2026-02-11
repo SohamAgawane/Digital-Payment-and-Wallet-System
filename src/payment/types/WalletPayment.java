@@ -6,17 +6,14 @@ public class WalletPayment extends Payment {
     private String walletProvider;
     private String walletName;
 
-    public WalletPayment(int paymentId, int amount, boolean status, String walletProvider, String walletName) {
-        super(paymentId, amount, status);
+    public WalletPayment(int paymentId, int amount, String walletProvider) {
+        super(paymentId, amount);
         this.walletProvider = walletProvider;
-        this.walletName = walletName;
     }
 
-    public String getWalletProvider() {
-        return walletProvider;
-    }
+    @Override
+    public void processPayment() {
+        System.out.println("Processing Wallet payment via " + walletProvider);
 
-    public String getWalletName() {
-        return walletName;
     }
 }

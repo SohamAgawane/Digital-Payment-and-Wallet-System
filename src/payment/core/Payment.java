@@ -5,10 +5,10 @@ public class Payment {
     private int amount;
     private boolean status;
 
-    public Payment(int paymentId, int amount, boolean status) {
+    public Payment(int paymentId, int amount) {
         this.paymentId = paymentId;
         this.amount = amount;
-        this.status = status;
+        this.status = false;
     }
 
     public int getPaymentId() {
@@ -21,5 +21,14 @@ public class Payment {
 
     public boolean isStatus() {
         return status;
+    }
+
+    protected void markAsSuccess() {
+        this.status = true;
+    }
+
+    public void processPayment() {
+        System.out.println("Processing generic payment...");
+        markAsSuccess();
     }
 }
