@@ -1,7 +1,9 @@
 package payment.core;
 
+import java.util.Objects;
+
 public class Payment {
-    private int paymentId;
+    private final int paymentId;
     private int amount;
     private boolean status;
 
@@ -30,5 +32,28 @@ public class Payment {
     public void processPayment() {
         System.out.println("Processing generic payment...");
         markAsSuccess();
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentId=" + paymentId +
+                ", amount=" + amount +
+                ", status=" + status +
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(!(o instanceof Payment)) return false;
+
+        Payment payment = (Payment) o;
+        return paymentId == payment.paymentId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId);
     }
 }
