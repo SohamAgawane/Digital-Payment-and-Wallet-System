@@ -1,6 +1,7 @@
 package payment.core;
 
 import notification.logger.Logger;
+import notification.service.NotificationService;
 
 public class PaymentGateway {
     private static PaymentGateway gatewayInstance;
@@ -25,5 +26,20 @@ public class PaymentGateway {
         Logger.getInstance().log(
                 "Accessing Gateway: " + GATEWAY_NAME
         );
+    }
+
+    public void processPayment(Payment payment, NotificationService notifier) {
+        Logger.getInstance().log("Processing payment of ₹" + payment.getAmount());
+
+        boolean success = payment.pay();
+
+        if (success) {
+            notifier.sendNotification(
+                    "Payment successful: ₹" + payment.getAmount()
+            );
+            Logger.getInstance().log("Payment completed successfully");
+        } else {
+            Logger.getInstance().log("Payment failed");
+        }
     }
 }

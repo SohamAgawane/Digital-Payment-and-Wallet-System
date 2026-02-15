@@ -3,8 +3,8 @@ package payment.types;
 import payment.core.Payment;
 
 public class WalletPayment extends Payment {
+
     private String walletProvider;
-    private String walletName;
 
     public WalletPayment(int paymentId, int amount, String walletProvider) {
         super(paymentId, amount);
@@ -12,8 +12,9 @@ public class WalletPayment extends Payment {
     }
 
     @Override
-    public void processPayment() {
+    public boolean pay() {
         System.out.println("Processing Wallet payment via " + walletProvider);
-
+        markAsSuccess();
+        return true;
     }
 }

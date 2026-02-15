@@ -2,9 +2,9 @@ package payment.core;
 
 import java.util.Objects;
 
-public class Payment {
-    private final int paymentId;
-    private int amount;
+public abstract class Payment {
+    protected final int paymentId;
+    protected int amount;
     private boolean status;
 
     public Payment(int paymentId, int amount) {
@@ -20,6 +20,8 @@ public class Payment {
     public int getAmount() {
         return amount;
     }
+
+    public abstract boolean pay();
 
     public boolean isStatus() {
         return status;
@@ -56,4 +58,6 @@ public class Payment {
     public int hashCode() {
         return Objects.hash(paymentId);
     }
+
+
 }
