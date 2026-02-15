@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="images/System Flow.png" width="600"/>
+  <img src="System Flow.png" width="600"/>
 </p>
