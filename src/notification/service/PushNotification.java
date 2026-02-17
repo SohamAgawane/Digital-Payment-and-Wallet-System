@@ -2,15 +2,17 @@ package notification.service;
 
 import notification.logger.Logger;
 
-public class PushNotification implements NotificationService{
-    private final String deviceId;
+public class PushNotification implements NotificationService {
 
-    public PushNotification(String deviceId) {
-        this.deviceId = deviceId;
+    private final String userId;
+
+    public PushNotification(String userId) {
+        this.userId = userId;
     }
 
     @Override
     public void sendNotification(String message) {
-        Logger.getInstance().log("Push sent to device " + deviceId + " : " + message);
+        Logger.getInstance()
+                .log("[PUSH] Sent to user " + userId + " : " + message);
     }
 }

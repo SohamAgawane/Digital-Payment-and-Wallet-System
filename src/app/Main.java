@@ -1,37 +1,70 @@
 package app;
 
+import notification.enums.NotificationType;
+import notification.factory.NotificationFactory;
 import notification.logger.Logger;
+import notification.service.NotificationService;
 import payment.core.Payment;
 import payment.core.PaymentGateway;
-import payment.types.CardPayment;
-import payment.types.UPIPayment;
-import payment.types.WalletPayment;
+import payment.exception.PaymentFailedException;
+import payment.types.*;
 import user.core.User;
 
-public class Main  {
+public class Main {
+
     public static void main(String[] args) {
+
         Logger logger = Logger.getInstance();
         logger.log("Application Started");
 
-        PaymentGateway gateway  = PaymentGateway.getGatewayInstance();
-        gateway.getGatewayInfo();
+        PaymentGateway gateway =
+                PaymentGateway.getGatewayInstance();
 
-        User user = new User(1001, "Soham Agawane", "9876543210");
+        User user = new User(1001,
+                "Soham Agawane",
+                "9876543210");
 
-        logger.log("User created successfully");
-
-        Payment p1 = new UPIPayment(101, 500, "sohamokupi");
-        Payment p2 = new CardPayment(102, 1500, 1234567812345678L, 123);
+        Payment p1 = new UPIPayment(101, 500, "soham@upi");
+        Payment p2 = new CardPayment(102, 1500,
+                1234567812345678L, 123);
         Payment p3 = new WalletPayment(103, 1000, "PayFast");
 
-        logger.log("Payments created");
+        try {
 
-        System.out.println("\n--- Processing Payments ---");
+            NotificationService sms =
+                    NotificationFactory.getNotifier(
+                            NotificationType.SMS,
+                            "9876543210");
 
-        p1.processPayment();
-        p2.processPayment();
-        p3.processPayment();
+            NotificationService email =
+                    NotificationFactory.getNotifier(
+                            NotificationType.EMAIL,
+                            "soham@gmail.com");
 
-        logger.log("Payments processed successfully");
+            NotificationService push =
+                    NotificationFactory.getNotifier(
+                            NotificationType.PUSH,
+                            "1001");
+
+            gateway.processPayment(p1, sms);
+            gateway.processPayment(p2, email);
+            gateway.processPayment(p3, push);
+
+        } catch (PaymentFailedException e) {
+            logger.log("Error: " + e.getMessage());
+        }
+
+        System.out.println("\n--- Successful Payments ---");
+        gateway.getSuccessfulPayments()
+                .forEach(System.out::println);
+
+        System.out.println("\n--- Lookup Payment 102 ---");
+        System.out.println(gateway.findPaymentById(102));
+
+        System.out.println("\n--- Legacy Logs ---");
+        gateway.getLegacyLogs()
+                .forEach(System.out::println);
+
+        logger.log("Application Finished");
     }
 }

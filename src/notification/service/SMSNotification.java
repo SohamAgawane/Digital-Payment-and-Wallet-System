@@ -2,20 +2,17 @@ package notification.service;
 
 import notification.logger.Logger;
 
-public class SMSNotification implements NotificationService{
-    private final String phoneNumber;
+public class SMSNotification implements NotificationService {
 
-    public SMSNotification(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    private final String mobile;
+
+    public SMSNotification(String mobile) {
+        this.mobile = mobile;
     }
 
     @Override
     public void sendNotification(String message) {
-        Logger.getInstance().log("SMS sent to " + phoneNumber + " : " + message);
-    }
-
-    @Deprecated
-    public void OldGateway(String message) {
-        System.out.println("Old SMS gateway used");
+        Logger.getInstance()
+                .log("[SMS] Sent to " + mobile + " : " + message);
     }
 }

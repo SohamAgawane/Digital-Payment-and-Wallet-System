@@ -2,7 +2,8 @@ package notification.service;
 
 import notification.logger.Logger;
 
-public class EmailNotification implements NotificationService{
+public class EmailNotification implements NotificationService {
+
     private final String email;
 
     public EmailNotification(String email) {
@@ -11,6 +12,7 @@ public class EmailNotification implements NotificationService{
 
     @Override
     public void sendNotification(String message) {
-        Logger.getInstance().log("Email sent to " + email + " : " + message);
+        Logger.getInstance()
+                .log("[EMAIL] Sent to " + email + " : " + message);
     }
 }
